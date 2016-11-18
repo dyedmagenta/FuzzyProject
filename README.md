@@ -1,3 +1,3 @@
 # FuzzyProject WIP
 
-Library for arduino to control with fuzzy logic
+Library for arduino with fuzzy logic
