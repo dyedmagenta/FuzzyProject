@@ -6,13 +6,15 @@
 #include "SimplyFuzzy.h"
 
 int main() {
-	printf("Hello World \n");	
+	printf("INPUTS LEFT MID RIGHT \n");	
 	
 	SimplyFuzzy sf;
 	int a, b, c;
 	while (std::cin >> a >> b >> c) {
 		c = sf.getLeftOutput(a, b, c);
-		std::cout << "\n" << c << "\n";
+		std::cout << "\nLEFT:" << c << "\n";
+		c = sf.getRightOutput(a, b, c);
+		std::cout << "RIGHT:" << c << "\n";
 	}
 	
 

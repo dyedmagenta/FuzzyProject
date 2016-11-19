@@ -23,9 +23,13 @@ SimplyFuzzy::SimplyFuzzy()
 
 	inputTerms[3].setPoints(45, 0);
 	inputTerms[3].setPoints(55, 1);
-	inputTerms[3].setPoints(200, 2);
-	inputTerms[3].setPoints(200, 3);
+	inputTerms[3].setPoints(2000, 2);
+	inputTerms[3].setPoints(2000, 3);
 
+
+
+	//Outpts -255 MIN -- MAX 255
+	//LAST and FIRST Output must be 
 	outPutTerms[0].setPoints(-305,0);
 	outPutTerms[0].setPoints(-255,1);
 	outPutTerms[0].setPoints(-255,2);
