@@ -1,15 +1,17 @@
-#include "main.h"
+#include <iostream>
+
+
 #include <stdio.h>
-#include "FuzzyMain.h"
+
+#include "SimplyFuzzy.h"
 
 int main() {
-
 	printf("Hello World \n");	
 	
-	FuzzyMain fm;
-	
-	char dudu;
-	scanf_s("%c", &dudu);
+	while(true)
+		SimplyFuzzy sf;
+
+	system("pause");
 
 	return 0;
 }

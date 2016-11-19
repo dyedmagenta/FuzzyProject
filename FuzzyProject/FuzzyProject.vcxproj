@@ -110,18 +110,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="FuzzyInput.h" />
-    <ClInclude Include="FuzzyMain.h" />
-    <ClInclude Include="FuzzyTerm.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="Rules.h" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SimplyFuzzy.cpp" />
+    <ClCompile Include="TermTrapez.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FuzzyMain.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="FuzzyInput.cpp" />
-    <ClCompile Include="FuzzyTerm.cpp" />
-    <ClCompile Include="Rules.cpp" />
+    <ClInclude Include="SimplyFuzzy.h" />
+    <ClInclude Include="TermTrapez.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
