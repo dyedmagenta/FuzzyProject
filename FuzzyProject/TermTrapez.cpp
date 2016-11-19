@@ -26,10 +26,18 @@ float TermTrapez::getValue(int x) {
 	if (x >= points[0] && x <= points[1])
 		value = (float)(x - points[0]) / (float)(points[1] - points[0]);
 	if (x >= points[1] && x <= points[2])
-		value = 1;
+		value = max;
 	if (x >= points[2] && x <= points[3])
 		value = (float)(points[3] - x) / (float)(points[3] - points[2]);
 	
 
 	return value;
+}
+
+void TermTrapez::setMax(float m) {
+	this->max = m;
+}
+
+float TermTrapez::getMax() {
+	return this->max;
 }

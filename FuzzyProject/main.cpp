@@ -8,8 +8,13 @@
 int main() {
 	printf("Hello World \n");	
 	
-	while(true)
-		SimplyFuzzy sf;
+	SimplyFuzzy sf;
+	int a, b, c;
+	while (std::cin >> a >> b >> c) {
+		c = sf.getLeftOutput(a, b, c);
+		std::cout << "\n" << c << "\n";
+	}
+	
 
 	system("pause");
 
