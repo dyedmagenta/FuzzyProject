@@ -3,7 +3,7 @@
 SimplyFuzzy::SimplyFuzzy()
 {
 	/*
-	INPUTS					Outputs/Rules
+	INPUTS					Outputs
 	[0] - Very Close		[0] - Back Max Speed
 	[1] - Close			 	[1] - Back Med Speed
 	[2] - Med				[2] - Back Min Speed
@@ -64,21 +64,18 @@ SimplyFuzzy::SimplyFuzzy()
 	outPutTerms[5].setPoints(255, 3);
 
 	for (int i = 0; i < 6; i++) {
-		centers[i] = (outPutTerms[i].getPoint(3) - outPutTerms[i].getPoint(0)) / (2 + outPutTerms[i].getPoint(0));
-	}
-	
-
-	for (int i = 0; i < 6; i++)
-	{
-		rulesTails[i] = &rules[i];
+		centers[i] = (float)(outPutTerms[i].getPoint(3) - outPutTerms[i].getPoint(0)) / (float)2.0 + outPutTerms[i].getPoint(0);
 	}
 }
 
 
-int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
+
+float SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	float leftValues[4];
 	float midValues[4];
 	float rightValues[4];
+
+
 
 	leftValues[0] = inputTerms[0].getValue(left);
 	leftValues[1] = inputTerms[1].getValue(left);
@@ -95,304 +92,432 @@ int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	rightValues[2] = inputTerms[2].getValue(right);
 	rightValues[3] = inputTerms[3].getValue(right);
 
-	/*	Rules
-	5	  4     3     2     1     0
-	FMAX, FMED, FMIN, BMIN, BMED, BMAX
-	*/
+
+
+	float ffmax = 0; // maxmax(5);
+	float ffmed = 0; // maxmax(4);
+	float ffmin = 0; // maxmax(3);
+	float bbmin = 0; // maxmax(2);
+	float bbmed = 0; // maxmax(1);
+	float bbmax = 0; // maxmax(0);
+	 
+	float fmax = 0;
+	float fmed = 0;
+	float fmin = 0;
+	float bmin = 0;
+	float bmed = 0;
+	float bmax = 0;
+
 	//F F
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[3], rightValues[3]));
+		fmax = minmin(leftValues[3], midValues[3], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[3], rightValues[2]));
+		fmed = minmin(leftValues[3], midValues[3], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[3], midValues[3], rightValues[1]));
+		fmin = minmin(leftValues[3], midValues[3], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[3], midValues[3], rightValues[0]));
+		bmed = minmin(leftValues[3], midValues[3], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//F M
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[2], rightValues[3]));
+		fmed = minmin(leftValues[3], midValues[2], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[2], rightValues[2]));
+		fmed = minmin(leftValues[3], midValues[2], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[3], midValues[2], rightValues[1]));
+		fmin = minmin(leftValues[3], midValues[2], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[3], midValues[2], rightValues[0]));
+		bmed = minmin(leftValues[3], midValues[2], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//F C
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(3, minmin(leftValues[3], midValues[1], rightValues[3]));
+		fmin = minmin(leftValues[3], midValues[1], rightValues[3]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[1], rightValues[2]));
+		fmed = minmin(leftValues[3], midValues[1], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[3], midValues[1], rightValues[1]));
+		fmin = minmin(leftValues[3], midValues[1], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[3], midValues[1], rightValues[0]));
+		bmed = minmin(leftValues[3], midValues[1], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//F V
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[0], rightValues[3]));
+		fmed = minmin(leftValues[3], midValues[0], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[0], rightValues[2]));
+		fmed = minmin(leftValues[3], midValues[0], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[0], rightValues[1]));
+		fmed = minmin(leftValues[3], midValues[0], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[3], midValues[0], rightValues[0]));
+		bmed = minmin(leftValues[3], midValues[0], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//M F
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[2], midValues[3], rightValues[3]));
+		fmax = minmin(leftValues[2], midValues[3], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[2], midValues[3], rightValues[2]));
+		fmin = minmin(leftValues[2], midValues[3], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(1, minmin(leftValues[2], midValues[3], rightValues[1]));
+		bmed = minmin(leftValues[2], midValues[3], rightValues[1]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[2], midValues[3], rightValues[0]));
+		bmed = minmin(leftValues[2], midValues[3], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//M M
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[2], midValues[2], rightValues[3]));
+		fmax = minmin(leftValues[2], midValues[2], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[2], midValues[2], rightValues[2]));
+		fmin = minmin(leftValues[2], midValues[2], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(2, minmin(leftValues[2], midValues[2], rightValues[1]));
+		bmin = minmin(leftValues[2], midValues[2], rightValues[1]);
+		if (bbmin < bmin)
+			bbmin = bmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[2], midValues[2], rightValues[0]));
+		bmed = minmin(leftValues[2], midValues[2], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//M C
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[2], midValues[1], rightValues[3]));
+		fmax = minmin(leftValues[2], midValues[1], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[2], midValues[1], rightValues[2]));
+		fmin = minmin(leftValues[2], midValues[1], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(2, minmin(leftValues[2], midValues[1], rightValues[1]));
+		bmin = minmin(leftValues[2], midValues[1], rightValues[1]);
+		if (bbmin < bmin)
+			bbmin = bmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[2], midValues[1], rightValues[0]));
+		bmed = minmin(leftValues[2], midValues[1], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//M V
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(1, minmin(leftValues[2], midValues[0], rightValues[3]));
+		bmed = minmin(leftValues[2], midValues[0], rightValues[3]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[2], midValues[0], rightValues[2]));
+		fmin = minmin(leftValues[2], midValues[0], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(1, minmin(leftValues[2], midValues[0], rightValues[1]));
+		bmed = minmin(leftValues[2], midValues[0], rightValues[1]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[2], midValues[0], rightValues[0]));
+		bmed = minmin(leftValues[2], midValues[0], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//C F
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[1], midValues[3], rightValues[3]));
+		fmax = minmin(leftValues[1], midValues[3], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
+
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[1], midValues[3], rightValues[2]));
+		fmax = minmin(leftValues[1], midValues[3], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[3], rightValues[1]));
+		bmed = minmin(leftValues[1], midValues[3], rightValues[1]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[3], rightValues[0]));
+		fmed = minmin(leftValues[1], midValues[3], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//C M
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[1], midValues[2], rightValues[3]));
+		fmax = minmin(leftValues[1], midValues[2], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
+
 	}
 	/*BMID*/
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[2], rightValues[2]));
+		bmed = minmin(leftValues[1], midValues[2], rightValues[2]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[2], rightValues[1]));
+		bmed = minmin(leftValues[1], midValues[2], rightValues[1]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[2], rightValues[0]));
+		bmed = minmin(leftValues[1], midValues[2], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//C C
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[1], midValues[1], rightValues[3]));
+		fmax = minmin(leftValues[1], midValues[1], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[1], rightValues[2]));
+		fmed = minmin(leftValues[1], midValues[1], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[1], rightValues[1]));
+		bmed = minmin(leftValues[1], midValues[1], rightValues[1]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[1], rightValues[0]));
+		fmed = minmin(leftValues[1], midValues[1], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//C V
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[0], rightValues[3]));
+		bmed = minmin(leftValues[1], midValues[0], rightValues[3]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[0], rightValues[2]));
+		fmed = minmin(leftValues[1], midValues[0], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[0], rightValues[1]));
+		bmed = minmin(leftValues[1], midValues[0], rightValues[1]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[0], rightValues[0]));
+		fmed = minmin(leftValues[1], midValues[0], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//V F
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[3], rightValues[3]));
+		fmed = minmin(leftValues[0], midValues[3], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[0], midValues[3], rightValues[2]));
+		fmax = minmin(leftValues[0], midValues[3], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[3], rightValues[1]));
+		fmin = minmin(leftValues[0], midValues[3], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[3], rightValues[0]));
+		bmed = minmin(leftValues[0], midValues[3], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//V M
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[2], rightValues[3]));
+		fmax = minmin(leftValues[0], midValues[2], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[0], midValues[2], rightValues[2]));
+		fmax = minmin(leftValues[0], midValues[2], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[2], rightValues[1]));
+		fmin = minmin(leftValues[0], midValues[2], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[2], rightValues[0]));
+		bmed = minmin(leftValues[0], midValues[2], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//V C
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[1], rightValues[3]));
+		fmed = minmin(leftValues[0], midValues[1], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[0], midValues[1], rightValues[2]));
+		fmax = minmin(leftValues[0], midValues[1], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[1], rightValues[1]));
+		fmin = minmin(leftValues[0], midValues[1], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[1], rightValues[0]));
+		bmed = minmin(leftValues[0], midValues[1], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//V V
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[0], rightValues[3]));
+		fmed = minmin(leftValues[0], midValues[0], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[0], midValues[0], rightValues[2]));
+		fmax = minmin(leftValues[0], midValues[0], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[0], rightValues[1]));
+		fmin = minmin(leftValues[0], midValues[0], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[0], rightValues[0]));
+		bmed = minmin(leftValues[0], midValues[0], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
-	float ffmax = maxmax(5);
-	float ffmed = maxmax(4);
-	float ffmin = maxmax(3);
-	float bbmin = maxmax(2);
-	float bbmed = maxmax(1);
-	float bbmax = maxmax(0);
-
-	outPutTerms[0].setMax(bbmax);
-	outPutTerms[1].setMax(bbmed);
-	outPutTerms[2].setMax(bbmin);
-	outPutTerms[3].setMax(ffmin);
-	outPutTerms[4].setMax(ffmed);
-	outPutTerms[5].setMax(ffmax);
 
 	float cog = (float)(bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
 
-	clearNodes();
-	return (int)round(cog);
+	return cog;
 }
 
 
-int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
+float SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 
 	float leftValues[4];
 	float midValues[4];
@@ -413,296 +538,433 @@ int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 	rightValues[2] = inputTerms[2].getValue(right);
 	rightValues[3] = inputTerms[3].getValue(right);
 
+	float ffmax = 0; // maxmax(5);
+	float ffmed = 0; // maxmax(4);
+	float ffmin = 0; // maxmax(3);
+	float bbmin = 0; // maxmax(2);
+	float bbmed = 0; // maxmax(1);
+	float bbmax = 0; // maxmax(0);
+
+	float fmax = 0;
+	float fmed = 0;
+	float fmin = 0;
+	float bmin = 0;
+	float bmed = 0;
+	float bmax = 0;
+
 	//F F
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[3], rightValues[3]));
+		fmax = minmin(leftValues[3], midValues[3], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[3], rightValues[2]));
+		fmax = minmin(leftValues[3], midValues[3], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[3], rightValues[1]));
+		fmax = minmin(leftValues[3], midValues[3], rightValues[1]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[3], rightValues[0]));
+		fmed = minmin(leftValues[3], midValues[3], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//F M
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[2], rightValues[3]));
+		fmax = minmin(leftValues[3], midValues[2], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[2], rightValues[2]));
+		fmax = minmin(leftValues[3], midValues[2], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[2], rightValues[1]));
+		fmax = minmin(leftValues[3], midValues[2], rightValues[1]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[2], rightValues[0]));
+		fmed = minmin(leftValues[3], midValues[2], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//F C
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[1], rightValues[3]));
+		fmax = minmin(leftValues[3], midValues[1], rightValues[3]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[1], rightValues[2]));
+		fmax = minmin(leftValues[3], midValues[1], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(5, minmin(leftValues[3], midValues[1], rightValues[1]));
+		fmax = minmin(leftValues[3], midValues[1], rightValues[1]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[1], rightValues[0]));
+		fmed = minmin(leftValues[3], midValues[1], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//F V
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[0], rightValues[3]));
+		fmed = minmin(leftValues[3], midValues[0], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[0], rightValues[2]));
+		fmed = minmin(leftValues[3], midValues[0], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[0], rightValues[1]));
+		fmed = minmin(leftValues[3], midValues[0], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[3], midValues[0], rightValues[0]));
+		fmed = minmin(leftValues[3], midValues[0], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//M F
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[3], rightValues[3]));
+		fmed = minmin(leftValues[2], midValues[3], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[2], midValues[3], rightValues[2]));
+		fmax = minmin(leftValues[2], midValues[3], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[3], rightValues[1]));
+		fmed = minmin(leftValues[2], midValues[3], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[3], rightValues[0]));
+		fmed = minmin(leftValues[2], midValues[3], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//M M
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[2], rightValues[3]));
+		fmed = minmin(leftValues[2], midValues[2], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[2], midValues[2], rightValues[2]));
+		fmax = minmin(leftValues[2], midValues[2], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[2], midValues[2], rightValues[1]));
+		fmin = minmin(leftValues[2], midValues[2], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[2], rightValues[0]));
+		fmed = minmin(leftValues[2], midValues[2], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//M C
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(3, minmin(leftValues[2], midValues[1], rightValues[3]));
+		fmin = minmin(leftValues[2], midValues[1], rightValues[3]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[2], midValues[1], rightValues[2]));
+		fmax = minmin(leftValues[2], midValues[1], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(3, minmin(leftValues[2], midValues[1], rightValues[1]));
+		fmin = minmin(leftValues[2], midValues[1], rightValues[1]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[1], rightValues[0]));
+		fmed = minmin(leftValues[2], midValues[1], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//M V
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[0], rightValues[3]));
+		fmed = minmin(leftValues[2], midValues[0], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(5, minmin(leftValues[2], midValues[0], rightValues[2]));
+		fmax = minmin(leftValues[2], midValues[0], rightValues[2]);
+		if (ffmax < fmax)
+			ffmax = fmax;
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[0], rightValues[1]));
+		fmed = minmin(leftValues[2], midValues[0], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[2], midValues[0], rightValues[0]));
+		fmed = minmin(leftValues[2], midValues[0], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//C F
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(3, minmin(leftValues[1], midValues[3], rightValues[3]));
+		fmin = minmin(leftValues[1], midValues[3], rightValues[3]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[1], midValues[3], rightValues[2]));
+		fmin = minmin(leftValues[1], midValues[3], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[3], rightValues[1]));
+		fmed = minmin(leftValues[1], midValues[3], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[3], rightValues[0]));
+		bmed = minmin(leftValues[1], midValues[3], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//C M
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(3, minmin(leftValues[1], midValues[2], rightValues[3]));
+		fmin = minmin(leftValues[1], midValues[2], rightValues[3]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[2], rightValues[2]));
+		fmed = minmin(leftValues[1], midValues[2], rightValues[2]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[2], rightValues[1]));
+		fmed = minmin(leftValues[1], midValues[2], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[2], rightValues[0]));
+		bmed = minmin(leftValues[1], midValues[2], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//C C
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(3, minmin(leftValues[1], midValues[1], rightValues[3]));
+		fmin = minmin(leftValues[1], midValues[1], rightValues[3]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[1], rightValues[2]));
+		bmed = minmin(leftValues[1], midValues[1], rightValues[2]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[1], rightValues[1]));
+		fmed = minmin(leftValues[1], midValues[1], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[1], rightValues[0]));
+		bmed = minmin(leftValues[1], midValues[1], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//C V
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[0], rightValues[3]));
+		fmed = minmin(leftValues[1], midValues[0], rightValues[3]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[0], rightValues[2]));
+		bmed = minmin(leftValues[1], midValues[0], rightValues[2]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(4, minmin(leftValues[1], midValues[0], rightValues[1]));
+		fmed = minmin(leftValues[1], midValues[0], rightValues[1]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minmin(leftValues[1], midValues[0], rightValues[0]));
+		bmed = minmin(leftValues[1], midValues[0], rightValues[0]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	//V F
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[3], rightValues[3]));
+		bmed = minmin(leftValues[0], midValues[3], rightValues[3]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[3], rightValues[2]));
+		fmin = minmin(leftValues[0], midValues[3], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(2, minmin(leftValues[0], midValues[3], rightValues[1]));
+		bmin = minmin(leftValues[0], midValues[3], rightValues[1]);
+		if (bbmin < bmin)
+			bbmin = bmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[3], rightValues[0]));
+		fmed = minmin(leftValues[0], midValues[3], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//V M
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[2], rightValues[3]));
+		bmed = minmin(leftValues[0], midValues[2], rightValues[3]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[2], rightValues[2]));
+		fmin = minmin(leftValues[0], midValues[2], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;;
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(2, minmin(leftValues[0], midValues[2], rightValues[1]));
+		bmin = minmin(leftValues[0], midValues[2], rightValues[1]);
+		if (bbmin < bmin)
+			bbmin = bmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[2], rightValues[0]));
+		fmed = minmin(leftValues[0], midValues[2], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//V C
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[1], rightValues[3]));
+		bmed = minmin(leftValues[0], midValues[1], rightValues[3]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[1], rightValues[2]));
+		fmin = minmin(leftValues[0], midValues[2], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(2, minmin(leftValues[0], midValues[1], rightValues[1]));
+		bmin = minmin(leftValues[0], midValues[1], rightValues[1]);
+		if (bbmin < bmin)
+			bbmin = bmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[1], rightValues[0]));
+		fmed = minmin(leftValues[0], midValues[1], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
 
 	//V V
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(1, minmin(leftValues[0], midValues[0], rightValues[3]));
+		bmed = minmin(leftValues[0], midValues[0], rightValues[3]);
+		if (bbmed < bmed)
+			bbmed = bmed;
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(3, minmin(leftValues[0], midValues[0], rightValues[2]));
+		fmin = minmin(leftValues[0], midValues[0], rightValues[2]);
+		if (ffmin < fmin)
+			ffmin = fmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(2, minmin(leftValues[0], midValues[0], rightValues[1]));
+		bmin = minmin(leftValues[0], midValues[0], rightValues[1]);
+		if (bbmin < bmin)
+			bbmin = bmin;
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(4, minmin(leftValues[0], midValues[0], rightValues[0]));
+		fmed = minmin(leftValues[0], midValues[0], rightValues[0]);
+		if (ffmed < fmed)
+			ffmed = fmed;
 	}
-
-	float ffmax = maxmax(5);
-	float ffmed = maxmax(4);
-	float ffmin = maxmax(3);
-	float bbmin = maxmax(2);
-	float bbmed = maxmax(1);
-	float bbmax = maxmax(0);
-
+/*
 	outPutTerms[0].setMax(bbmax);
 	outPutTerms[1].setMax(bbmed);
 	outPutTerms[2].setMax(bbmin);
 	outPutTerms[3].setMax(ffmin);
 	outPutTerms[4].setMax(ffmed);
-	outPutTerms[5].setMax(ffmax);
+	outPutTerms[5].setMax(ffmax);*/
+
+
+
 
 	float cog = (bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
-	
-	clearNodes();
-	return round(cog);
+
+	return cog;
 }
 
 float SimplyFuzzy::minmin(float a, float b, float c) {
@@ -740,57 +1002,6 @@ void SimplyFuzzy::updateOutput(int outputNum, float y) {
 	outPutTerms[outputNum].setPoints(nPoint, 2);
 }
 
-/*	Rules
-5	  4     3     2     1     0
-FMAX, FMED, FMIN, BMIN, BMED, BMAX
-*/
-//free this !!!!!!!!!!
-void SimplyFuzzy::addNode(int ruleNum, float value) {
-	Node* nNode = (Node*)malloc(sizeof(Node));
-	nNode->value = value;
-	nNode->next = NULL;
-	rulesTails[ruleNum]->next = nNode;
-	rulesTails[ruleNum] = nNode;
-}
-
-float SimplyFuzzy::maxmax(int ruleNum) {
-	Node* nodeCursor = &rules[ruleNum];
-	float max = nodeCursor->value;
-	
-	while (nodeCursor->next != NULL) {
-		nodeCursor = nodeCursor->next;
-		if (nodeCursor->value > max)
-			max = nodeCursor->value;
-	}
-	return max;
-}
-#include <iostream>
 SimplyFuzzy::~SimplyFuzzy() 
 {
-	std::cout << "CALLED DESTRUCTOR";
-	clearNodes();
-	std::cout << "\nDESTRUCTED\n";
-}
-void SimplyFuzzy::clearNodes() {
-	Node* cur;
-	for (int i = 0; i < 6; i++)
-	{
-		int j = 1;
-		cur = &rules[i];
-		while (rulesTails[i] != &rules[i])
-		{
-			
-			if (cur->next->next == NULL) {
-				std::cout << "\nREMOVED Node: " << j << " Rule: " << i;
-				j++;
-				rulesTails[i] = cur;
-				free(cur->next);
-				cur->next = NULL;
-				cur = &rules[i];
-			}
-			else {
-				cur = cur->next;
-			}
-		}
-	}
 }
