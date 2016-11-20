@@ -1,11 +1,9 @@
 #include "SimplyFuzzy.h"
 
-#include<iostream>
 
 
 SimplyFuzzy::SimplyFuzzy()
 {
-
 	inputTerms[0].setPoints(-10, 0);
 	inputTerms[0].setPoints(0, 1);
 	inputTerms[0].setPoints(0, 2);
@@ -99,274 +97,274 @@ int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	std::vector<float> bmax;
 
 	//F F
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[3], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[3], midValues[3], rightValues[0]));
 	}
 
 	//F M
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[2], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[3], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[3], midValues[2], rightValues[0]));
 	}
 
 	//F C
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		fmin.push_back(minmin(leftValues[3], midValues[1], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[3], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[3], midValues[1], rightValues[0]));
 	}
 
 	//F V
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[3], midValues[0], rightValues[0]));
 	}
 
 	//M F
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[2], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[2], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		bmed.push_back(minmin(leftValues[2], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[2], midValues[3], rightValues[0]));
 	}
 
 	//M M
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[2], midValues[2], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[2], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		bmin.push_back(minmin(leftValues[2], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[2], midValues[2], rightValues[0]));
 	}
 
 	//M C
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[2], midValues[1], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[2], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		bmin.push_back(minmin(leftValues[2], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[2], midValues[1], rightValues[0]));
 	}
 
 	//M V
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		bmed.push_back(minmin(leftValues[2], midValues[0], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[2], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		bmed.push_back(minmin(leftValues[2], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[2], midValues[0], rightValues[0]));
 	}
 
 	//C F
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[1], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[1], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[3], rightValues[0]));
 	}
 
 	//C M
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[1], midValues[2], rightValues[3]));
 	}
 	/*BMID*/
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[0]));
 	}
 
 	//C C
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[1], midValues[1], rightValues[3]));
 	}
 	/*fmid*/
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[1], rightValues[0]));
 	}
 
 	//C V
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[3]));
 	}
 	/*fmid*/
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[0]));
 	}
 
 	//V F
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[0], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[3], rightValues[0]));
 	}
 
 	//V M
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[2], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[0], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[2], rightValues[0]));
 	}
 
 	//V C
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[1], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[0], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[1], rightValues[0]));
 	}
 
 	//V V
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[0], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[0], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[0], rightValues[0]));
 	}
 
@@ -394,7 +392,15 @@ int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	updateOutput(5, ffmax);
 
 
-	float cog = (bbmax*outPutTerms[0].getPoint(1) + bbmed*outPutTerms[1].getPoint(1) + bbmin*outPutTerms[2].getPoint(1) + ffmin*outPutTerms[3].getPoint(1) + ffmed*outPutTerms[4].getPoint(1) + ffmax*outPutTerms[5].getPoint(1)) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
+	float centers[6];
+	for (int i = 0; i < 6; i++) {
+		float temp = outPutTerms[i].getPoint(2) - outPutTerms[i].getPoint(1);
+		if (temp == 0) centers[i] = outPutTerms[i].getPoint(1);
+		else centers[i] = temp;		
+	}
+
+	float cog = (bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
+
 	
 	resetOutput();
 
@@ -403,6 +409,7 @@ int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 
 
 int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
+
 	float leftValues[4];
 	float midValues[4];
 	float rightValues[4];
@@ -431,274 +438,274 @@ int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 	std::vector<float> bmax;
 
 	//F F
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[3], rightValues[0]));
 	}
 
 	//F M
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[2], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[2], rightValues[0]));
 	}
 
 	//F C
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[1], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		fmax.push_back(minmin(leftValues[3], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[1], rightValues[0]));
 	}
 
 	//F V
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[3]));
 	}
 
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[3] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[0]));
 	}
 
 	//M F
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[2], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[3], rightValues[0]));
 	}
 
 	//M M
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[2], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[2], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[2], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[2], rightValues[0]));
 	}
 
 	//M C
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		fmin.push_back(minmin(leftValues[2], midValues[1], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[2], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		fmin.push_back(minmin(leftValues[2], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[1], rightValues[0]));
 	}
 
 	//M V
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[0], rightValues[3]));
 	}
 
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		fmax.push_back(minmin(leftValues[2], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[2] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[2], midValues[0], rightValues[0]));
 	}
 
 	//C F
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		fmin.push_back(minmin(leftValues[1], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[1], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[3], rightValues[0]));
 	}
 
 	//C M
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		fmin.push_back(minmin(leftValues[1], midValues[2], rightValues[3]));
 	}
 	/*fmid*/
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[0]));
 	}
 
 	//C C
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		fmin.push_back(minmin(leftValues[1], midValues[1], rightValues[3]));
 	}
 	/*fmid*/
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[1], rightValues[0]));
 	}
 
 	//C V
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[3]));
 	}
 	/*fmid*/
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[1] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[0]));
 	}
 
 	//V F
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[3], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[3], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
 		bmin.push_back(minmin(leftValues[0], midValues[3], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[3] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[3], rightValues[0]));
 	}
 
 	//V M
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[2], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[2], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
 		bmin.push_back(minmin(leftValues[0], midValues[2], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[2] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[2], rightValues[0]));
 	}
 
 	//V C
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[1], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[1], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
 		bmin.push_back(minmin(leftValues[0], midValues[1], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[1] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[1], rightValues[0]));
 	}
 
 	//V V
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[3] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
 		bmed.push_back(minmin(leftValues[0], midValues[0], rightValues[3]));
 	}
 
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[2] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
 		fmin.push_back(minmin(leftValues[0], midValues[0], rightValues[2]));
 	}
 
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[1] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
 		bmin.push_back(minmin(leftValues[0], midValues[0], rightValues[1]));
 	}
 
-	if (leftValues[0] != 0 || midValues[0] != 0 || rightValues[0] != 0) {
+	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
 		fmed.push_back(minmin(leftValues[0], midValues[0], rightValues[0]));
 	}
 
@@ -708,8 +715,6 @@ int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 	float bbmin = maxmax(bmin);
 	float bbmed = maxmax(bmed);
 	float bbmax = maxmax(bmax);
-
-
 
 	outPutTerms[0].setMax(bbmax);
 	outPutTerms[1].setMax(bbmed);
@@ -725,8 +730,14 @@ int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 	updateOutput(4, ffmed);
 	updateOutput(5, ffmax);
 
+	float centers[6];
+	for (int i = 0; i < 6; i++) {
+		float temp = outPutTerms[i].getPoint(2) - outPutTerms[i].getPoint(1);
+		if (temp == 0) centers[i] = outPutTerms[i].getPoint(1);
+		else centers[i] = temp;
+	}
 
-	float cog = (bbmax*outPutTerms[0].getPoint(1) + bbmed*outPutTerms[1].getPoint(1) + bbmin*outPutTerms[2].getPoint(1) + ffmin*outPutTerms[3].getPoint(1) + ffmed*outPutTerms[4].getPoint(1) + ffmax*outPutTerms[5].getPoint(1)) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
+	float cog = (bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
 
 	resetOutput();
 
@@ -763,12 +774,11 @@ void SimplyFuzzy::resetOutput() {
 
 void SimplyFuzzy::updateOutput(int outputNum, float y) {
 	if (y == 0.0) return;
-	float a = 1.0 / (outPutTerms[outputNum].getPoint(1) - outPutTerms[outputNum].getPoint(0));
+	float a = outPutTerms[outputNum].getMax() / (outPutTerms[outputNum].getPoint(1) - outPutTerms[outputNum].getPoint(0));
 	float b = -a * outPutTerms[outputNum].getPoint(0);
 	int nPoint = (y - b) / a;
 	outPutTerms[outputNum].setPoints(nPoint, 1);
 	outPutTerms[outputNum].setPoints(nPoint, 2);
 }
-
 
 SimplyFuzzy::~SimplyFuzzy() {}

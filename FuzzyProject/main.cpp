@@ -11,10 +11,10 @@ int main() {
 	SimplyFuzzy sf;
 	int a, b, c;
 	while (std::cin >> a >> b >> c) {
-		c = sf.getLeftOutput(a, b, c);
-		std::cout << "\nLEFT:" << c << "\n";
-		c = sf.getRightOutput(a, b, c);
-		std::cout << "RIGHT:" << c << "\n";
+		int dd = sf.getLeftOutput(a, b, c);
+		std::cout << "\nLEFT:" << dd << "\n";
+		dd = sf.getRightOutput(a, b, c);
+		std::cout << "RIGHT:" << dd << "\n";
 	}
 	
 
