@@ -5,10 +5,11 @@
 int main() {
 	printf("INPUTS\nLEFT MID RIGHT \n");
 
-	
 	SimplyFuzzy sf;
+	
 	int a, b, c;
 	while (std::cin >> a >> b >> c) {
+		
 		int dd = sf.getLeftOutput(a, b, c);
 		std::cout << "\n LEFT SPEED:" << dd << "\n";
 		dd = sf.getRightOutput(a, b, c);

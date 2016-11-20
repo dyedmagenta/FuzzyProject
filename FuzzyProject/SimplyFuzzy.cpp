@@ -3,7 +3,7 @@
 SimplyFuzzy::SimplyFuzzy()
 {
 	/*
-	INPUTS					Outputs
+	INPUTS					Outputs/Rules
 	[0] - Very Close		[0] - Back Max Speed
 	[1] - Close			 	[1] - Back Med Speed
 	[2] - Med				[2] - Back Min Speed
@@ -30,8 +30,6 @@ SimplyFuzzy::SimplyFuzzy()
 	inputTerms[3].setPoints(75, 1);
 	inputTerms[3].setPoints(250, 2);
 	inputTerms[3].setPoints(300, 3);
-
-
 	
 	//Outpts -255 MIN .. MAX 255
 	//Outputs must be symmetrical
@@ -66,7 +64,13 @@ SimplyFuzzy::SimplyFuzzy()
 	outPutTerms[5].setPoints(255, 3);
 
 	for (int i = 0; i < 6; i++) {
-		centers[i] = (outPutTerms[i].getPoint(3) - outPutTerms[i].getPoint(0)) / 2 + outPutTerms[i].getPoint(0);
+		centers[i] = (outPutTerms[i].getPoint(3) - outPutTerms[i].getPoint(0)) / (2 + outPutTerms[i].getPoint(0));
+	}
+	
+
+	for (int i = 0; i < 6; i++)
+	{
+		rulesTails[i] = &rules[i];
 	}
 }
 
@@ -91,291 +95,288 @@ int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	rightValues[2] = inputTerms[2].getValue(right);
 	rightValues[3] = inputTerms[3].getValue(right);
 
-	std::vector<float> fmax;
-	std::vector<float> fmed;
-	std::vector<float> fmin;
-	std::vector<float> bmin;
-	std::vector<float> bmed;
-	std::vector<float> bmax;
-
+	/*	Rules
+	5	  4     3     2     1     0
+	FMAX, FMED, FMIN, BMIN, BMED, BMAX
+	*/
 	//F F
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[3]));
+		addNode(5, minmin(leftValues[3], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[3], rightValues[2]));
+		addNode(4, minmin(leftValues[3], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[3], midValues[3], rightValues[1]));
+		addNode(3, minmin(leftValues[3], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[3], midValues[3], rightValues[0]));
+		addNode(1, minmin(leftValues[3], midValues[3], rightValues[0]));
 	}
 
 	//F M
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[2], rightValues[3]));
+		addNode(4, minmin(leftValues[3], midValues[2], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[2], rightValues[2]));
+		addNode(4, minmin(leftValues[3], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[3], midValues[2], rightValues[1]));
+		addNode(3, minmin(leftValues[3], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[3], midValues[2], rightValues[0]));
+		addNode(1, minmin(leftValues[3], midValues[2], rightValues[0]));
 	}
 
 	//F C
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		fmin.push_back(minmin(leftValues[3], midValues[1], rightValues[3]));
+		addNode(3, minmin(leftValues[3], midValues[1], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[1], rightValues[2]));
+		addNode(4, minmin(leftValues[3], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[3], midValues[1], rightValues[1]));
+		addNode(3, minmin(leftValues[3], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[3], midValues[1], rightValues[0]));
+		addNode(1, minmin(leftValues[3], midValues[1], rightValues[0]));
 	}
 
 	//F V
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[3]));
+		addNode(4, minmin(leftValues[3], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[2]));
+		addNode(4, minmin(leftValues[3], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[1]));
+		addNode(4, minmin(leftValues[3], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[3], midValues[0], rightValues[0]));
+		addNode(1, minmin(leftValues[3], midValues[0], rightValues[0]));
 	}
 
 	//M F
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[2], midValues[3], rightValues[3]));
+		addNode(5, minmin(leftValues[2], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[2], midValues[3], rightValues[2]));
+		addNode(3, minmin(leftValues[2], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		bmed.push_back(minmin(leftValues[2], midValues[3], rightValues[1]));
+		addNode(1, minmin(leftValues[2], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[2], midValues[3], rightValues[0]));
+		addNode(1, minmin(leftValues[2], midValues[3], rightValues[0]));
 	}
 
 	//M M
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[2], midValues[2], rightValues[3]));
+		addNode(5, minmin(leftValues[2], midValues[2], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[2], midValues[2], rightValues[2]));
+		addNode(3, minmin(leftValues[2], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		bmin.push_back(minmin(leftValues[2], midValues[2], rightValues[1]));
+		addNode(2, minmin(leftValues[2], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[2], midValues[2], rightValues[0]));
+		addNode(1, minmin(leftValues[2], midValues[2], rightValues[0]));
 	}
 
 	//M C
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[2], midValues[1], rightValues[3]));
+		addNode(5, minmin(leftValues[2], midValues[1], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[2], midValues[1], rightValues[2]));
+		addNode(3, minmin(leftValues[2], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		bmin.push_back(minmin(leftValues[2], midValues[1], rightValues[1]));
+		addNode(2, minmin(leftValues[2], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[2], midValues[1], rightValues[0]));
+		addNode(1, minmin(leftValues[2], midValues[1], rightValues[0]));
 	}
 
 	//M V
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		bmed.push_back(minmin(leftValues[2], midValues[0], rightValues[3]));
+		addNode(1, minmin(leftValues[2], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[2], midValues[0], rightValues[2]));
+		addNode(3, minmin(leftValues[2], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		bmed.push_back(minmin(leftValues[2], midValues[0], rightValues[1]));
+		addNode(1, minmin(leftValues[2], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[2], midValues[0], rightValues[0]));
+		addNode(1, minmin(leftValues[2], midValues[0], rightValues[0]));
 	}
 
 	//C F
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[1], midValues[3], rightValues[3]));
+		addNode(5, minmin(leftValues[1], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[1], midValues[3], rightValues[2]));
+		addNode(5, minmin(leftValues[1], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[3], rightValues[1]));
+		addNode(1, minmin(leftValues[1], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[3], rightValues[0]));
+		addNode(4, minmin(leftValues[1], midValues[3], rightValues[0]));
 	}
 
 	//C M
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[1], midValues[2], rightValues[3]));
+		addNode(5, minmin(leftValues[1], midValues[2], rightValues[3]));
 	}
 	/*BMID*/
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[2]));
+		addNode(1, minmin(leftValues[1], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[1]));
+		addNode(1, minmin(leftValues[1], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[0]));
+		addNode(1, minmin(leftValues[1], midValues[2], rightValues[0]));
 	}
 
 	//C C
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[1], midValues[1], rightValues[3]));
+		addNode(5, minmin(leftValues[1], midValues[1], rightValues[3]));
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[1], rightValues[2]));
+		addNode(4, minmin(leftValues[1], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[1], rightValues[1]));
+		addNode(1, minmin(leftValues[1], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[1], rightValues[0]));
+		addNode(4, minmin(leftValues[1], midValues[1], rightValues[0]));
 	}
 
 	//C V
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[3]));
+		addNode(1, minmin(leftValues[1], midValues[0], rightValues[3]));
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[2]));
+		addNode(4, minmin(leftValues[1], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[1]));
+		addNode(1, minmin(leftValues[1], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[0]));
+		addNode(4, minmin(leftValues[1], midValues[0], rightValues[0]));
 	}
 
 	//V F
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[3], rightValues[3]));
+		addNode(4, minmin(leftValues[0], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[0], midValues[3], rightValues[2]));
+		addNode(5, minmin(leftValues[0], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[3], rightValues[1]));
+		addNode(3, minmin(leftValues[0], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[3], rightValues[0]));
+		addNode(1, minmin(leftValues[0], midValues[3], rightValues[0]));
 	}
 
 	//V M
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[2], rightValues[3]));
+		addNode(4, minmin(leftValues[0], midValues[2], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[0], midValues[2], rightValues[2]));
+		addNode(5, minmin(leftValues[0], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[2], rightValues[1]));
+		addNode(3, minmin(leftValues[0], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[2], rightValues[0]));
+		addNode(1, minmin(leftValues[0], midValues[2], rightValues[0]));
 	}
 
 	//V C
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[1], rightValues[3]));
+		addNode(4, minmin(leftValues[0], midValues[1], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[0], midValues[1], rightValues[2]));
+		addNode(5, minmin(leftValues[0], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[1], rightValues[1]));
+		addNode(3, minmin(leftValues[0], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[1], rightValues[0]));
+		addNode(1, minmin(leftValues[0], midValues[1], rightValues[0]));
 	}
 
 	//V V
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[0], rightValues[3]));
+		addNode(4, minmin(leftValues[0], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[0], midValues[0], rightValues[2]));
+		addNode(5, minmin(leftValues[0], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[0], rightValues[1]));
+		addNode(3, minmin(leftValues[0], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[0], rightValues[0]));
+		addNode(1, minmin(leftValues[0], midValues[0], rightValues[0]));
 	}
 
-	float ffmax = maxmax(fmax);
-	float ffmed = maxmax(fmed);
-	float ffmin = maxmax(fmin);
-	float bbmin = maxmax(bmin);
-	float bbmed = maxmax(bmed);
-	float bbmax = maxmax(bmax);
+	float ffmax = maxmax(5);
+	float ffmed = maxmax(4);
+	float ffmin = maxmax(3);
+	float bbmin = maxmax(2);
+	float bbmed = maxmax(1);
+	float bbmax = maxmax(0);
 
 	outPutTerms[0].setMax(bbmax);
 	outPutTerms[1].setMax(bbmed);
@@ -384,9 +385,10 @@ int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	outPutTerms[4].setMax(ffmed);
 	outPutTerms[5].setMax(ffmax);
 
-	float cog = (bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
+	float cog = (float)(bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
 
-	return round(cog);
+	clearNodes();
+	return (int)round(cog);
 }
 
 
@@ -411,292 +413,284 @@ int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 	rightValues[2] = inputTerms[2].getValue(right);
 	rightValues[3] = inputTerms[3].getValue(right);
 
-
-	std::vector<float> fmax;
-	std::vector<float> fmed;
-	std::vector<float> fmin;
-	std::vector<float> bmin;
-	std::vector<float> bmed;
-	std::vector<float> bmax;
-
 	//F F
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[3]));
+		addNode(5, minmin(leftValues[3], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[2]));
+		addNode(5, minmin(leftValues[3], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[3], rightValues[1]));
+		addNode(5, minmin(leftValues[3], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[3], rightValues[0]));
+		addNode(4, minmin(leftValues[3], midValues[3], rightValues[0]));
 	}
 
 	//F M
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[2], rightValues[3]));
+		addNode(5, minmin(leftValues[3], midValues[2], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[2], rightValues[2]));
+		addNode(5, minmin(leftValues[3], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[2], rightValues[1]));
+		addNode(5, minmin(leftValues[3], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[2], rightValues[0]));
+		addNode(4, minmin(leftValues[3], midValues[2], rightValues[0]));
 	}
 
 	//F C
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[1], rightValues[3]));
+		addNode(5, minmin(leftValues[3], midValues[1], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[1], rightValues[2]));
+		addNode(5, minmin(leftValues[3], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		fmax.push_back(minmin(leftValues[3], midValues[1], rightValues[1]));
+		addNode(5, minmin(leftValues[3], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[1], rightValues[0]));
+		addNode(4, minmin(leftValues[3], midValues[1], rightValues[0]));
 	}
 
 	//F V
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[3]));
+		addNode(4, minmin(leftValues[3], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[2]));
+		addNode(4, minmin(leftValues[3], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[1]));
+		addNode(4, minmin(leftValues[3], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[3], midValues[0], rightValues[0]));
+		addNode(4, minmin(leftValues[3], midValues[0], rightValues[0]));
 	}
 
 	//M F
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[3], rightValues[3]));
+		addNode(4, minmin(leftValues[2], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[2], midValues[3], rightValues[2]));
+		addNode(5, minmin(leftValues[2], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[3], rightValues[1]));
+		addNode(4, minmin(leftValues[2], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[3], rightValues[0]));
+		addNode(4, minmin(leftValues[2], midValues[3], rightValues[0]));
 	}
 
 	//M M
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[2], rightValues[3]));
+		addNode(4, minmin(leftValues[2], midValues[2], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[2], midValues[2], rightValues[2]));
+		addNode(5, minmin(leftValues[2], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[2], midValues[2], rightValues[1]));
+		addNode(3, minmin(leftValues[2], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[2], rightValues[0]));
+		addNode(4, minmin(leftValues[2], midValues[2], rightValues[0]));
 	}
 
 	//M C
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		fmin.push_back(minmin(leftValues[2], midValues[1], rightValues[3]));
+		addNode(3, minmin(leftValues[2], midValues[1], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[2], midValues[1], rightValues[2]));
+		addNode(5, minmin(leftValues[2], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		fmin.push_back(minmin(leftValues[2], midValues[1], rightValues[1]));
+		addNode(3, minmin(leftValues[2], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[1], rightValues[0]));
+		addNode(4, minmin(leftValues[2], midValues[1], rightValues[0]));
 	}
 
 	//M V
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[0], rightValues[3]));
+		addNode(4, minmin(leftValues[2], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		fmax.push_back(minmin(leftValues[2], midValues[0], rightValues[2]));
+		addNode(5, minmin(leftValues[2], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[0], rightValues[1]));
+		addNode(4, minmin(leftValues[2], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[2], midValues[0], rightValues[0]));
+		addNode(4, minmin(leftValues[2], midValues[0], rightValues[0]));
 	}
 
 	//C F
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		fmin.push_back(minmin(leftValues[1], midValues[3], rightValues[3]));
+		addNode(3, minmin(leftValues[1], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[1], midValues[3], rightValues[2]));
+		addNode(3, minmin(leftValues[1], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[3], rightValues[1]));
+		addNode(4, minmin(leftValues[1], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[3], rightValues[0]));
+		addNode(1, minmin(leftValues[1], midValues[3], rightValues[0]));
 	}
 
 	//C M
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		fmin.push_back(minmin(leftValues[1], midValues[2], rightValues[3]));
+		addNode(3, minmin(leftValues[1], midValues[2], rightValues[3]));
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[2], rightValues[2]));
+		addNode(4, minmin(leftValues[1], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[2], rightValues[1]));
+		addNode(4, minmin(leftValues[1], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[2], rightValues[0]));
+		addNode(1, minmin(leftValues[1], midValues[2], rightValues[0]));
 	}
 
 	//C C
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		fmin.push_back(minmin(leftValues[1], midValues[1], rightValues[3]));
+		addNode(3, minmin(leftValues[1], midValues[1], rightValues[3]));
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[1], rightValues[2]));
+		addNode(1, minmin(leftValues[1], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[1], rightValues[1]));
+		addNode(4, minmin(leftValues[1], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[1], rightValues[0]));
+		addNode(1, minmin(leftValues[1], midValues[1], rightValues[0]));
 	}
 
 	//C V
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[3]));
+		addNode(4, minmin(leftValues[1], midValues[0], rightValues[3]));
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[2]));
+		addNode(1, minmin(leftValues[1], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		fmed.push_back(minmin(leftValues[1], midValues[0], rightValues[1]));
+		addNode(4, minmin(leftValues[1], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		bmed.push_back(minmin(leftValues[1], midValues[0], rightValues[0]));
+		addNode(1, minmin(leftValues[1], midValues[0], rightValues[0]));
 	}
 
 	//V F
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[3], rightValues[3]));
+		addNode(1, minmin(leftValues[0], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[3], rightValues[2]));
+		addNode(3, minmin(leftValues[0], midValues[3], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		bmin.push_back(minmin(leftValues[0], midValues[3], rightValues[1]));
+		addNode(2, minmin(leftValues[0], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[3], rightValues[0]));
+		addNode(4, minmin(leftValues[0], midValues[3], rightValues[0]));
 	}
 
 	//V M
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[2], rightValues[3]));
+		addNode(1, minmin(leftValues[0], midValues[2], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[2], rightValues[2]));
+		addNode(3, minmin(leftValues[0], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		bmin.push_back(minmin(leftValues[0], midValues[2], rightValues[1]));
+		addNode(2, minmin(leftValues[0], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[2], rightValues[0]));
+		addNode(4, minmin(leftValues[0], midValues[2], rightValues[0]));
 	}
 
 	//V C
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[1], rightValues[3]));
+		addNode(1, minmin(leftValues[0], midValues[1], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[1], rightValues[2]));
+		addNode(3, minmin(leftValues[0], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		bmin.push_back(minmin(leftValues[0], midValues[1], rightValues[1]));
+		addNode(2, minmin(leftValues[0], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[1], rightValues[0]));
+		addNode(4, minmin(leftValues[0], midValues[1], rightValues[0]));
 	}
 
 	//V V
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		bmed.push_back(minmin(leftValues[0], midValues[0], rightValues[3]));
+		addNode(1, minmin(leftValues[0], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		fmin.push_back(minmin(leftValues[0], midValues[0], rightValues[2]));
+		addNode(3, minmin(leftValues[0], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		bmin.push_back(minmin(leftValues[0], midValues[0], rightValues[1]));
+		addNode(2, minmin(leftValues[0], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		fmed.push_back(minmin(leftValues[0], midValues[0], rightValues[0]));
+		addNode(4, minmin(leftValues[0], midValues[0], rightValues[0]));
 	}
 
-	float ffmax = maxmax(fmax);
-	float ffmed = maxmax(fmed);
-	float ffmin = maxmax(fmin);
-	float bbmin = maxmax(bmin);
-	float bbmed = maxmax(bmed);
-	float bbmax = maxmax(bmax);
+	float ffmax = maxmax(5);
+	float ffmed = maxmax(4);
+	float ffmin = maxmax(3);
+	float bbmin = maxmax(2);
+	float bbmed = maxmax(1);
+	float bbmax = maxmax(0);
 
 	outPutTerms[0].setMax(bbmax);
 	outPutTerms[1].setMax(bbmed);
@@ -707,28 +701,21 @@ int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 
 	float cog = (bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
 	
-
+	clearNodes();
 	return round(cog);
 }
 
-float SimplyFuzzy::maxmax(std::vector<float> &v) {
-	std::vector<float>* myV = &v;
-
-	int siz = std::distance(myV->begin(), myV->end());
-
-	float max = 0;
-
-	for (int i = 0; i < siz; i++) {
-		if (myV->at(i) > max)
-			max = myV->at(i);
-	}
-	return max;
-}
-
-
-
 float SimplyFuzzy::minmin(float a, float b, float c) {
-	return std::fminf(a, std::fminf(b, c));
+	if (a < b)
+		if (a < c)
+			return a;
+		else
+			return c;
+	else
+		if (b < c)
+			return b;
+		else
+			return c;
 }
 
 void SimplyFuzzy::resetOutput() {
@@ -747,10 +734,63 @@ void SimplyFuzzy::updateOutput(int outputNum, float y) {
 	if (y == 0.0) return;
 	float a = outPutTerms[outputNum].getMax() / (outPutTerms[outputNum].getPoint(1) - outPutTerms[outputNum].getPoint(0));
 	float b = -a * outPutTerms[outputNum].getPoint(0);
-	int nPoint = (y - b) / a;
+	int nPoint = (int) ((y - b) / a);
 	outPutTerms[outputNum].setPoints(nPoint, 1);
 	nPoint = outPutTerms[outputNum].getPoint(3) + (outPutTerms[outputNum].getPoint(1) - outPutTerms[outputNum].getPoint(0));
 	outPutTerms[outputNum].setPoints(nPoint, 2);
 }
 
-SimplyFuzzy::~SimplyFuzzy() {}
+/*	Rules
+5	  4     3     2     1     0
+FMAX, FMED, FMIN, BMIN, BMED, BMAX
+*/
+//free this !!!!!!!!!!
+void SimplyFuzzy::addNode(int ruleNum, float value) {
+	Node* nNode = (Node*)malloc(sizeof(Node));
+	nNode->value = value;
+	nNode->next = NULL;
+	rulesTails[ruleNum]->next = nNode;
+	rulesTails[ruleNum] = nNode;
+}
+
+float SimplyFuzzy::maxmax(int ruleNum) {
+	Node* nodeCursor = &rules[ruleNum];
+	float max = nodeCursor->value;
+	
+	while (nodeCursor->next != NULL) {
+		nodeCursor = nodeCursor->next;
+		if (nodeCursor->value > max)
+			max = nodeCursor->value;
+	}
+	return max;
+}
+#include <iostream>
+SimplyFuzzy::~SimplyFuzzy() 
+{
+	std::cout << "CALLED DESTRUCTOR";
+	clearNodes();
+	std::cout << "\nDESTRUCTED\n";
+}
+void SimplyFuzzy::clearNodes() {
+	Node* cur;
+	for (int i = 0; i < 6; i++)
+	{
+		int j = 1;
+		cur = &rules[i];
+		while (rulesTails[i] != &rules[i])
+		{
+			
+			if (cur->next->next == NULL) {
+				std::cout << "\nREMOVED Node: " << j << " Rule: " << i;
+				j++;
+				rulesTails[i] = cur;
+				free(cur->next);
+				cur->next = NULL;
+				cur = &rules[i];
+			}
+			else {
+				cur = cur->next;
+			}
+		}
+	}
+}

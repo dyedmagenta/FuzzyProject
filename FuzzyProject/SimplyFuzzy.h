@@ -1,12 +1,16 @@
 #ifndef SIMPLYFUZZY_H
 #define SIMPLYFUZZY_H
 
-#include <cstdlib>
-#include<vector>
 #include<math.h>
-#include <iterator>
+#include<stdlib.h>
 
 #include "TermTrapez.h"
+
+struct Node {
+
+	float value = 0;
+	Node* next = NULL;
+};
 
 class SimplyFuzzy
 {
@@ -19,12 +23,16 @@ public:
 private:
 	TermTrapez inputTerms[4];
 	TermTrapez outPutTerms[6];
-	float centers[6];
+	int centers[6];
+
+	Node* rulesTails[6];
+	Node rules[6];
 
 	void resetOutput();
 	void updateOutput(int outputNum, float y);
-	float maxmax(std::vector<float> &v);
+	float maxmax(int ruleNum);
 	float minmin(float a, float b, float c);
-
+	void addNode(int ruleNum, float value);
+	void clearNodes();
 };
 #endif // !SIMPLYFUZZY_H
