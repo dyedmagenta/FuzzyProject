@@ -17,9 +17,9 @@ class SimplyFuzzy
 public:
 	SimplyFuzzy();
 	~SimplyFuzzy();
-	
-	int getLeftOutput(int Left, int Mid, int Right);
-	int getRightOutput(int Left, int Mid, int Right);
+
+	float getLeftOutput(int Left, int Mid, int Right);
+	float getRightOutput(int Left, int Mid, int Right);
 private:
 	TermTrapez inputTerms[4];
 	TermTrapez outPutTerms[6];

@@ -8,14 +8,14 @@ SimplyFuzzy::SimplyFuzzy()
 	[1] - Close			 	[1] - Back Med Speed
 	[2] - Med				[2] - Back Min Speed
 	[3] - Far				[3] - Forward Min Speed
-							[4] - Forward Med Speed
-							[5] - Forward Max Speed
+	[4] - Forward Med Speed
+	[5] - Forward Max Speed
 	*/
 	inputTerms[0].setPoints(-15, 0);
 	inputTerms[0].setPoints(0, 1);
 	inputTerms[0].setPoints(10, 2);
 	inputTerms[0].setPoints(25, 3);
-	
+
 	inputTerms[1].setPoints(10, 0);
 	inputTerms[1].setPoints(25, 1);
 	inputTerms[1].setPoints(35, 2);
@@ -30,12 +30,12 @@ SimplyFuzzy::SimplyFuzzy()
 	inputTerms[3].setPoints(75, 1);
 	inputTerms[3].setPoints(250, 2);
 	inputTerms[3].setPoints(300, 3);
-	
+
 	//Outpts -255 MIN .. MAX 255
 	//Outputs must be symmetrical
-	outPutTerms[0].setPoints(-255,0);
-	outPutTerms[0].setPoints(-225,1);
-	outPutTerms[0].setPoints(-185,2);
+	outPutTerms[0].setPoints(-255, 0);
+	outPutTerms[0].setPoints(-225, 1);
+	outPutTerms[0].setPoints(-185, 2);
 	outPutTerms[0].setPoints(-155, 3);
 
 	outPutTerms[1].setPoints(-185, 0);
@@ -57,16 +57,16 @@ SimplyFuzzy::SimplyFuzzy()
 	outPutTerms[4].setPoints(115, 1);
 	outPutTerms[4].setPoints(155, 2);
 	outPutTerms[4].setPoints(185, 3);
-	
+
 	outPutTerms[5].setPoints(155, 0);
 	outPutTerms[5].setPoints(185, 1);
 	outPutTerms[5].setPoints(225, 2);
 	outPutTerms[5].setPoints(255, 3);
 
 	for (int i = 0; i < 6; i++) {
-		centers[i] = (outPutTerms[i].getPoint(3) - outPutTerms[i].getPoint(0)) / (2 + outPutTerms[i].getPoint(0));
+		centers[i] =(int) (outPutTerms[i].getPoint(3) - outPutTerms[i].getPoint(0)) / 2.0 + outPutTerms[i].getPoint(0);
 	}
-	
+
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -75,7 +75,7 @@ SimplyFuzzy::SimplyFuzzy()
 }
 
 
-int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
+float SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	float leftValues[4];
 	float midValues[4];
 	float rightValues[4];
@@ -378,21 +378,15 @@ int SimplyFuzzy::getLeftOutput(int left, int mid, int right) {
 	float bbmed = maxmax(1);
 	float bbmax = maxmax(0);
 
-	outPutTerms[0].setMax(bbmax);
-	outPutTerms[1].setMax(bbmed);
-	outPutTerms[2].setMax(bbmin);
-	outPutTerms[3].setMax(ffmin);
-	outPutTerms[4].setMax(ffmed);
-	outPutTerms[5].setMax(ffmax);
 
 	float cog = (float)(bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
 
 	clearNodes();
-	return (int)round(cog);
+	return cog;
 }
 
 
-int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
+float SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 
 	float leftValues[4];
 	float midValues[4];
@@ -692,17 +686,11 @@ int SimplyFuzzy::getRightOutput(int left, int mid, int right) {
 	float bbmed = maxmax(1);
 	float bbmax = maxmax(0);
 
-	outPutTerms[0].setMax(bbmax);
-	outPutTerms[1].setMax(bbmed);
-	outPutTerms[2].setMax(bbmin);
-	outPutTerms[3].setMax(ffmin);
-	outPutTerms[4].setMax(ffmed);
-	outPutTerms[5].setMax(ffmax);
 
 	float cog = (bbmax*centers[0] + bbmed*centers[1] + bbmin*centers[2] + ffmin*centers[3] + ffmed*centers[4] + ffmax*centers[5]) / (bbmax + bbmed + bbmin + ffmin + ffmed + ffmax);
-	
+
 	clearNodes();
-	return round(cog);
+	return cog;
 }
 
 float SimplyFuzzy::minmin(float a, float b, float c) {
@@ -727,14 +715,14 @@ void SimplyFuzzy::resetOutput() {
 }
 
 /*
-	Calculates x of the after giving new y, 
-	used for getting fuzzy outputs
+Calculates x of the after giving new y,
+used for getting fuzzy outputs
 */
 void SimplyFuzzy::updateOutput(int outputNum, float y) {
 	if (y == 0.0) return;
 	float a = outPutTerms[outputNum].getMax() / (outPutTerms[outputNum].getPoint(1) - outPutTerms[outputNum].getPoint(0));
 	float b = -a * outPutTerms[outputNum].getPoint(0);
-	int nPoint = (int) ((y - b) / a);
+	int nPoint = (int)((y - b) / a);
 	outPutTerms[outputNum].setPoints(nPoint, 1);
 	nPoint = outPutTerms[outputNum].getPoint(3) + (outPutTerms[outputNum].getPoint(1) - outPutTerms[outputNum].getPoint(0));
 	outPutTerms[outputNum].setPoints(nPoint, 2);
@@ -756,7 +744,7 @@ void SimplyFuzzy::addNode(int ruleNum, float value) {
 float SimplyFuzzy::maxmax(int ruleNum) {
 	Node* nodeCursor = &rules[ruleNum];
 	float max = nodeCursor->value;
-	
+
 	while (nodeCursor->next != NULL) {
 		nodeCursor = nodeCursor->next;
 		if (nodeCursor->value > max)
@@ -764,25 +752,20 @@ float SimplyFuzzy::maxmax(int ruleNum) {
 	}
 	return max;
 }
-#include <iostream>
-SimplyFuzzy::~SimplyFuzzy() 
+
+SimplyFuzzy::~SimplyFuzzy()
 {
-	std::cout << "CALLED DESTRUCTOR";
 	clearNodes();
-	std::cout << "\nDESTRUCTED\n";
 }
 void SimplyFuzzy::clearNodes() {
 	Node* cur;
 	for (int i = 0; i < 6; i++)
 	{
-		int j = 1;
 		cur = &rules[i];
 		while (rulesTails[i] != &rules[i])
 		{
-			
+
 			if (cur->next->next == NULL) {
-				std::cout << "\nREMOVED Node: " << j << " Rule: " << i;
-				j++;
 				rulesTails[i] = cur;
 				free(cur->next);
 				cur->next = NULL;
