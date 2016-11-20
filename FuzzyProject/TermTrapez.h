@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TERMTRAPEZ_H
+#define TERMTRAPEZ_H
+
 class TermTrapez
 {
 public:
@@ -13,4 +15,4 @@ private:
 	int points[4] = { 0, 0, 0, 0 };
 	float max = 1.0;
 };
-
+#endif // !TERMTRAPEZ_H

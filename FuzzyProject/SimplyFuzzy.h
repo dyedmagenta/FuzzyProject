@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SIMPLYFUZZY_H
+#define SIMPLYFUZZY_H
 
 #include <cstdlib>
 #include<vector>
@@ -18,6 +19,7 @@ public:
 private:
 	TermTrapez inputTerms[4];
 	TermTrapez outPutTerms[6];
+	float centers[6];
 
 	void resetOutput();
 	void updateOutput(int outputNum, float y);
@@ -25,4 +27,4 @@ private:
 	float minmin(float a, float b, float c);
 
 };
-
+#endif // !SIMPLYFUZZY_H
