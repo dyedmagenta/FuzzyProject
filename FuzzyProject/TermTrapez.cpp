@@ -20,6 +20,8 @@ int TermTrapez::getPoint(int pointNum) {
 }
 
 float TermTrapez::getValue(int x) {
+	if (isZero) return 0.0;
+
 	if (x < points[0] || x > points[3])
 		return 0.0;
 	float value = 0;
@@ -34,8 +36,28 @@ float TermTrapez::getValue(int x) {
 	return value;
 }
 
+void TermTrapez::updateTerm(float y) {
+	if (y == 0.0) {
+		this->isZero = true;
+		return;
+	}
+	float a = this->max / (this->points[1] - this->points[0]);
+	float b = -a * this->points[0];
+	int nPoint = (int)((y - b) / a);
+	this->points[1] = nPoint;
+	nPoint = this->points[3] + (this->points[1] - this->points[0]);
+	this->points[2] = nPoint;
+	this->max = y;
+	this->isZero = false;
+}
+
 void TermTrapez::setMax(float m) {
-	this->max = m;
+	if (m == 0.0) {
+		isZero = true;
+	}
+	else {
+		this->max = m;
+	}	
 }
 
 float TermTrapez::getMax() {

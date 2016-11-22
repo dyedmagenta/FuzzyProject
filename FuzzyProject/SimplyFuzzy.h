@@ -23,16 +23,16 @@ public:
 private:
 	TermTrapez inputTerms[4];
 	TermTrapez outPutTerms[6];
-	int centers[6];
+	float outputValues[6];
 
 	Node* rulesTails[6];
 	Node rules[6];
 
-	void resetOutput();
-	void updateOutput(int outputNum, float y);
 	float maxmax(int ruleNum);
+	float maxmax(float arr[], int arrSize);
 	float minmin(float a, float b, float c);
 	void addNode(int ruleNum, float value);
-	void clearNodes();
+	void cleanVariables();
+	float calculateCoG();
 };
 #endif // !SIMPLYFUZZY_H
