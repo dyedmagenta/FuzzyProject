@@ -3,10 +3,7 @@
 
 class TermTrapez
 {
-public:
-	TermTrapez();
-	~TermTrapez();
-	
+public:	
 	float getValue(int x);
 	void setPoints(int point, int pointNum);
 	int getPoint(int pointNum);

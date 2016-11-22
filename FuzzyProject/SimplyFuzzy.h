@@ -2,7 +2,7 @@
 #define SIMPLYFUZZY_H
 
 #include<math.h>
-#include<stdlib.h>
+#include<malloc.h>
 
 #include "TermTrapez.h"
 
@@ -17,13 +17,19 @@ class SimplyFuzzy
 public:
 	SimplyFuzzy();
 	~SimplyFuzzy();
+	void init();
+	void setInputs(int left, int mid, int right);
+	
+	float getOutput(bool isLeft);
 
-	float getLeftOutput(int Left, int Mid, int Right);
-	float getRightOutput(int Left, int Mid, int Right);
 private:
 	TermTrapez inputTerms[4];
 	TermTrapez outPutTerms[6];
 	float outputValues[6];
+
+	float leftValues[4];
+	float midValues[4];
+	float rightValues[4];
 
 	Node* rulesTails[6];
 	Node rules[6];
@@ -33,6 +39,7 @@ private:
 	float minmin(float a, float b, float c);
 	void addNode(int ruleNum, float value);
 	void cleanVariables();
-	float calculateCoG();
+	void rulesLeft();
+	void rulesRight();
 };
 #endif // !SIMPLYFUZZY_H

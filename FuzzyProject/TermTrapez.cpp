@@ -1,20 +1,10 @@
 #include "TermTrapez.h"
 
-
-
-TermTrapez::TermTrapez()
-{
-}
-
-
-TermTrapez::~TermTrapez()
-{
-}
-
 void TermTrapez::setPoints(int point, int pointNum) {
 	if (pointNum >= 4 || pointNum < 0) return;
 	this->points[pointNum] = point;
 }
+
 int TermTrapez::getPoint(int pointNum) {
 	return this->points[pointNum];
 }

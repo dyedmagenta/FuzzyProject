@@ -118,6 +118,9 @@
     <ClInclude Include="SimplyFuzzy.h" />
     <ClInclude Include="TermTrapez.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="arduinoTest.ino" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
