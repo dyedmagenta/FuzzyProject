@@ -21,7 +21,7 @@
     <ClCompile Include="SimplyFuzzy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TermTrapez.cpp">
+    <ClCompile Include="Term.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="SimplyFuzzy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TermTrapez.h">
+    <ClInclude Include="Term.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

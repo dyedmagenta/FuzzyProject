@@ -2,6 +2,11 @@
 
 #include "SimplyFuzzy.h"
 
+
+
+/*
+ * Console Example
+ */
 int main() {
 	printf("INPUTS\nLEFT MID RIGHT \n");
 
@@ -21,3 +26,4 @@ int main() {
 
 	return 0;
 }
+

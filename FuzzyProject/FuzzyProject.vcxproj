@@ -112,11 +112,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SimplyFuzzy.cpp" />
-    <ClCompile Include="TermTrapez.cpp" />
+    <ClCompile Include="Term.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimplyFuzzy.h" />
-    <ClInclude Include="TermTrapez.h" />
+    <ClInclude Include="Term.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="arduinoTest.ino" />
