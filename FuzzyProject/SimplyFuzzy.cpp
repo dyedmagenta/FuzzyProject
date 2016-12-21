@@ -62,11 +62,11 @@ void SimplyFuzzy::init() {
 
 	outputTerms[2].setPoints(-115, 0);
 	outputTerms[2].setPoints(-85, 1);
-	outputTerms[2].setPoints(-45, 2);
-	outputTerms[2].setPoints(-15, 3);
+	outputTerms[2].setPoints(-70, 2);
+	outputTerms[2].setPoints(-60, 3);
 
-	outputTerms[3].setPoints(15, 0);
-	outputTerms[3].setPoints(45, 1);
+	outputTerms[3].setPoints(60, 0);
+	outputTerms[3].setPoints(70, 1);
 	outputTerms[3].setPoints(85, 2);
 	outputTerms[3].setPoints(115, 3);
 

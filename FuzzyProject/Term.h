@@ -1,6 +1,7 @@
+
 #ifndef TERM_H
 #define TERM_H
-#include "Math.h"
+#include <math.h>
 /*
  * Can be used for declaring Singleton, Triangle or Trapezoid term 
  * 
