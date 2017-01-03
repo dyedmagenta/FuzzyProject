@@ -6,7 +6,7 @@
 
 struct Node {
 	float value = 0;
-	Node* next = nullptr;
+	Node* next = NULL;
 };
 
 class SimplyFuzzy
@@ -14,8 +14,8 @@ class SimplyFuzzy
 public:
 	SimplyFuzzy();
 	~SimplyFuzzy();
-	/**  
-	 *  /brief  
+	/**
+	 *  /brief
 	 *  Intializes input and output terms for 3 distance sensors as inputs and 2 wheels as outputs
 	 *  Works as helper method for a constructor
 	 *  In .ino should be called after allocating memory
@@ -23,28 +23,28 @@ public:
 	 */
 	void init();
 	/**
-	 * \brief 
+	 * \brief
 	 * Sets values of inputs
-	 *  
-	 * \param left 
+	 *
+	 * \param left
 	 * Distance from left sensor
-	 * 
-	 * \param mid  
+	 *
+	 * \param mid
 	 * Distance from middle sensor
-	 * 
-	 * \param right 
+	 *
+	 * \param right
 	 * Distance from right sensor
 	 */
 	void setInputs(int left, int mid, int right);
 	/**
 	 * \brief
 	 * Calculates speed value for a wheel
-	 *  
+	 *
 	 * \param isLeft
 	 * true		- returns speed for left wheel
 	 * false	- returns speed for right wheel
-	 * 
-	 * \return 
+	 *
+	 * \return
 	 * Speed value
 	 */
 	int getOutput(bool isLeft);
@@ -80,7 +80,7 @@ private:
 	*/
 	static float maxValue(float arr[], int arrSize);
 	/*
-	 * Returns minimum value 
+	 * Returns minimum value
 	 */
 	static float minValue(float a, float b, float c);
 	/*

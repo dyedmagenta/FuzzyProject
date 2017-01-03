@@ -1,6 +1,6 @@
 #include "SimplyFuzzy.h"
 
-/* 
+/*
  * INPUTS
  * inputTerms[0] - Very Close	(-15, 25)
  * inputTerms[1] - Close		(10, 50)
@@ -50,13 +50,13 @@ void SimplyFuzzy::init() {
 	inputTerms[3].setPoints(255, 2);
 	inputTerms[3].setPoints(270, 3);
 
-	outputTerms[0].setPoints(-255, 0);
-	outputTerms[0].setPoints(-225, 1);
-	outputTerms[0].setPoints(-185, 2);
-	outputTerms[0].setPoints(-155, 3);
+	outputTerms[0].setPoints(-200, 0);
+	outputTerms[0].setPoints(-175, 1);
+	outputTerms[0].setPoints(-135, 2);
+	outputTerms[0].setPoints(-105, 3);
 
-	outputTerms[1].setPoints(-185, 0);
-	outputTerms[1].setPoints(-155, 1);
+	outputTerms[1].setPoints(-135, 0);
+	outputTerms[1].setPoints(-105, 1);
 	outputTerms[1].setPoints(-115, 2);
 	outputTerms[1].setPoints(-85, 3);
 
@@ -65,20 +65,20 @@ void SimplyFuzzy::init() {
 	outputTerms[2].setPoints(-70, 2);
 	outputTerms[2].setPoints(-60, 3);
 
-	outputTerms[3].setPoints(60, 0);
-	outputTerms[3].setPoints(70, 1);
-	outputTerms[3].setPoints(85, 2);
-	outputTerms[3].setPoints(115, 3);
+	outputTerms[3].setPoints(40, 0);
+	outputTerms[3].setPoints(45, 1);
+	outputTerms[3].setPoints(50, 2);
+	outputTerms[3].setPoints(55, 3);
 
-	outputTerms[4].setPoints(85, 0);
-	outputTerms[4].setPoints(115, 1);
-	outputTerms[4].setPoints(155, 2);
-	outputTerms[4].setPoints(185, 3);
+	outputTerms[4].setPoints(50, 0);
+	outputTerms[4].setPoints(55, 1);
+	outputTerms[4].setPoints(65, 2);
+	outputTerms[4].setPoints(95, 3);
 
-	outputTerms[5].setPoints(155, 0);
-	outputTerms[5].setPoints(185, 1);
-	outputTerms[5].setPoints(225, 2);
-	outputTerms[5].setPoints(255, 3);
+	outputTerms[5].setPoints(65, 0);
+	outputTerms[5].setPoints(95, 1);
+	outputTerms[5].setPoints(125, 2);
+	outputTerms[5].setPoints(150, 3);
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -148,7 +148,7 @@ float SimplyFuzzy::maxValue(int ruleNum) {
 	Node* nodeCursor = &ruleLists[ruleNum];
 	float max = nodeCursor->value;
 
-	while (nodeCursor->next != nullptr) {
+	while (nodeCursor->next != NULL) {
 		nodeCursor = nodeCursor->next;
 		if (nodeCursor->value > max)
 			max = nodeCursor->value;
@@ -170,7 +170,7 @@ float SimplyFuzzy::maxValue(float arr[], int arrSize) {
 void SimplyFuzzy::addNode(int ruleNum, float value) {
 	Node* nNode = (Node*)malloc(sizeof(Node));
 	nNode->value = value;
-	nNode->next = nullptr;
+	nNode->next = NULL;
 	rulesTails[ruleNum]->next = nNode;
 	rulesTails[ruleNum] = nNode;
 }
@@ -268,19 +268,19 @@ void SimplyFuzzy::rulesLeft() {
 
 	//F V
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(4, minValue(leftValues[3], midValues[0], rightValues[3]));
+		addNode(1, minValue(leftValues[3], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(4, minValue(leftValues[3], midValues[0], rightValues[2]));
+		addNode(1, minValue(leftValues[3], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(4, minValue(leftValues[3], midValues[0], rightValues[1]));
+		addNode(1, minValue(leftValues[3], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[3], midValues[0], rightValues[0]));
+		addNode(0, minValue(leftValues[3], midValues[0], rightValues[0]));
 	}
 
 	//M F
