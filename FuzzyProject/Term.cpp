@@ -42,14 +42,6 @@ void Term::updateTerm(float y) {
 		this->points[2] = newPoint(this->points[2], this->points[3], y);
 	}
 	
-	// OLD	
-	/*float a = this->max / (this->points[1] - this->points[0]);
-	float b = -a * this->points[0];
-	int nPoint = (int)((y - b) / a);
-	this->points[1] = nPoint;
-	nPoint = this->points[3] + (this->points[1] - this->points[0]);
-	this->points[2] = nPoint;*/
-	
 	this->max = y;
 	this->isZero = false;
 }

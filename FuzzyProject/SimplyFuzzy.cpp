@@ -5,7 +5,7 @@
  * inputTerms[0] - Very Close	(-15, 25)
  * inputTerms[1] - Close		(10, 50)
  * inputTerms[2] - Med			(35, 75)
- * inputTerms[3] - Far			(60, 300)
+ * inputTerms[3] - Far			(60, 270)
  *
  * Outputs values range from -255 MIN to MAX 255
  * In some cases first term should be symmetrical in respect to the lowest value
@@ -13,12 +13,12 @@
  * calculated right
  *
  * OUTPUTS
- * outputTerms[0] - Back Max Speed		(-255, -155)
- * outputTerms[1] - Back Med Speed		(-185, -85)
- * outputTerms[2] - Back Min Speed		(-115, -15)
- * outputTerms[3] - Forward Min Speed	(15, 115)
- * outputTerms[4] - Forward Med Speed	(85, 185)
- * outputTerms[5] - Forward Max Speed	(155, 255)
+ * outputTerms[0] - Back Max Speed		(-200, -105)
+ * outputTerms[1] - Back Med Speed		(-135, -85)
+ * outputTerms[2] - Back Min Speed		(-115, -60)
+ * outputTerms[3] - Forward Min Speed	(40, 55)
+ * outputTerms[4] - Forward Med Speed	(50, 75)
+ * outputTerms[5] - Forward Max Speed	(60, 125)
  */
 SimplyFuzzy::SimplyFuzzy()
 {

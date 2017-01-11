@@ -38,16 +38,11 @@ public:
 	int getPoint(int pointNum);
 	void setMax(float m);
 	float getMax() const;
-
 	void updateTerm(float y);
 private:
 	int points[4] = { 0, 0, 0, 0 };
 	float max = 1.0;
 	bool isZero = false;
-	/*
-	 * lastPoint should be greater than firstPoint
-	 * lastPoint > firstPoint
-	 */
 	int newPoint(int lastPoint, int firstPoint, float y);
 };
 #endif // !TERM_H
