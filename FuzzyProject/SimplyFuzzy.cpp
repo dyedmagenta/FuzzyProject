@@ -73,12 +73,12 @@ void SimplyFuzzy::init() {
 	outputTerms[4].setPoints(50, 0);
 	outputTerms[4].setPoints(55, 1);
 	outputTerms[4].setPoints(65, 2);
-	outputTerms[4].setPoints(95, 3);
+	outputTerms[4].setPoints(75, 3);
 
 	outputTerms[5].setPoints(65, 0);
-	outputTerms[5].setPoints(95, 1);
-	outputTerms[5].setPoints(125, 2);
-	outputTerms[5].setPoints(150, 3);
+	outputTerms[5].setPoints(75, 1);
+	outputTerms[5].setPoints(100, 2);
+	outputTerms[5].setPoints(125, 3);
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -229,7 +229,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[3] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[3], midValues[3], rightValues[0]));
+		addNode(0, minValue(leftValues[3], midValues[3], rightValues[0]));
 	}
 
 	//F M
@@ -246,7 +246,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[3] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[3], midValues[2], rightValues[0]));
+		addNode(0, minValue(leftValues[3], midValues[2], rightValues[0]));
 	}
 
 	//F C
@@ -263,20 +263,20 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[3] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[3], midValues[1], rightValues[0]));
+		addNode(0, minValue(leftValues[3], midValues[1], rightValues[0]));
 	}
 
 	//F V
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(1, minValue(leftValues[3], midValues[0], rightValues[3]));
+		addNode(0, minValue(leftValues[3], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(1, minValue(leftValues[3], midValues[0], rightValues[2]));
+		addNode(0, minValue(leftValues[3], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(1, minValue(leftValues[3], midValues[0], rightValues[1]));
+		addNode(0, minValue(leftValues[3], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[3] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
@@ -293,11 +293,11 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(1, minValue(leftValues[2], midValues[3], rightValues[1]));
+		addNode(0, minValue(leftValues[2], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[2], midValues[3], rightValues[0]));
+		addNode(0, minValue(leftValues[2], midValues[3], rightValues[0]));
 	}
 
 	//M M
@@ -314,7 +314,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[2] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[2], midValues[2], rightValues[0]));
+		addNode(0, minValue(leftValues[2], midValues[2], rightValues[0]));
 	}
 
 	//M C
@@ -331,12 +331,12 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[2] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[2], midValues[1], rightValues[0]));
+		addNode(0, minValue(leftValues[2], midValues[1], rightValues[0]));
 	}
 
 	//M V
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(1, minValue(leftValues[2], midValues[0], rightValues[3]));
+		addNode(0, minValue(leftValues[2], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
@@ -344,11 +344,11 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(1, minValue(leftValues[2], midValues[0], rightValues[1]));
+		addNode(0, minValue(leftValues[2], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[2] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[2], midValues[0], rightValues[0]));
+		addNode(0, minValue(leftValues[2], midValues[0], rightValues[0]));
 	}
 
 	//C F
@@ -361,7 +361,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[1] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[3], rightValues[1]));
+		addNode(0, minValue(leftValues[1], midValues[3], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
@@ -374,15 +374,15 @@ void SimplyFuzzy::rulesLeft() {
 	}
 	/*BMID*/
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[2], rightValues[2]));
+		addNode(0, minValue(leftValues[1], midValues[2], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[1] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[2], rightValues[1]));
+		addNode(0, minValue(leftValues[1], midValues[2], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[2], rightValues[0]));
+		addNode(0, minValue(leftValues[1], midValues[2], rightValues[0]));
 	}
 
 	//C C
@@ -395,7 +395,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[1], rightValues[1]));
+		addNode(0, minValue(leftValues[1], midValues[1], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
@@ -404,7 +404,7 @@ void SimplyFuzzy::rulesLeft() {
 
 	//C V
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[0], rightValues[3]));
+		addNode(0, minValue(leftValues[1], midValues[0], rightValues[3]));
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
@@ -412,7 +412,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[0], rightValues[1]));
+		addNode(0, minValue(leftValues[1], midValues[0], rightValues[1]));
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
@@ -433,7 +433,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[3], rightValues[0]));
+		addNode(0, minValue(leftValues[0], midValues[3], rightValues[0]));
 	}
 
 	//V M
@@ -450,7 +450,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[2], rightValues[0]));
+		addNode(0, minValue(leftValues[0], midValues[2], rightValues[0]));
 	}
 
 	//V C
@@ -467,7 +467,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[1], rightValues[0]));
+		addNode(0, minValue(leftValues[0], midValues[1], rightValues[0]));
 	}
 
 	//V V
@@ -484,7 +484,7 @@ void SimplyFuzzy::rulesLeft() {
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[0], rightValues[0]));
+		addNode(0, minValue(leftValues[0], midValues[0], rightValues[0]));
 	}
 }
 
@@ -639,7 +639,7 @@ void SimplyFuzzy::rulesRight() {
 	}
 
 	if (leftValues[1] != 0 && midValues[3] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[3], rightValues[0]));
+		addNode(0, minValue(leftValues[1], midValues[3], rightValues[0]));
 	}
 
 	//C M
@@ -656,7 +656,7 @@ void SimplyFuzzy::rulesRight() {
 	}
 
 	if (leftValues[1] != 0 && midValues[2] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[2], rightValues[0]));
+		addNode(0, minValue(leftValues[1], midValues[2], rightValues[0]));
 	}
 
 	//C C
@@ -665,7 +665,7 @@ void SimplyFuzzy::rulesRight() {
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[1], rightValues[2]));
+		addNode(0, minValue(leftValues[1], midValues[1], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[1] != 0) {
@@ -673,7 +673,7 @@ void SimplyFuzzy::rulesRight() {
 	}
 
 	if (leftValues[1] != 0 && midValues[1] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[1], rightValues[0]));
+		addNode(0, minValue(leftValues[1], midValues[1], rightValues[0]));
 	}
 
 	//C V
@@ -682,7 +682,7 @@ void SimplyFuzzy::rulesRight() {
 	}
 	/*fmid*/
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[2] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[0], rightValues[2]));
+		addNode(0, minValue(leftValues[1], midValues[0], rightValues[2]));
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[1] != 0) {
@@ -690,12 +690,12 @@ void SimplyFuzzy::rulesRight() {
 	}
 
 	if (leftValues[1] != 0 && midValues[0] != 0 && rightValues[0] != 0) {
-		addNode(1, minValue(leftValues[1], midValues[0], rightValues[0]));
+		addNode(0, minValue(leftValues[1], midValues[0], rightValues[0]));
 	}
 
 	//V F
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[3] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[3], rightValues[3]));
+		addNode(0, minValue(leftValues[0], midValues[3], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[3] != 0 && rightValues[2] != 0) {
@@ -712,7 +712,7 @@ void SimplyFuzzy::rulesRight() {
 
 	//V M
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[3] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[2], rightValues[3]));
+		addNode(0, minValue(leftValues[0], midValues[2], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[2] != 0 && rightValues[2] != 0) {
@@ -729,7 +729,7 @@ void SimplyFuzzy::rulesRight() {
 
 	//V C
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[3] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[1], rightValues[3]));
+		addNode(0, minValue(leftValues[0], midValues[1], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[1] != 0 && rightValues[2] != 0) {
@@ -746,7 +746,7 @@ void SimplyFuzzy::rulesRight() {
 
 	//V V
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[3] != 0) {
-		addNode(1, minValue(leftValues[0], midValues[0], rightValues[3]));
+		addNode(0, minValue(leftValues[0], midValues[0], rightValues[3]));
 	}
 
 	if (leftValues[0] != 0 && midValues[0] != 0 && rightValues[2] != 0) {

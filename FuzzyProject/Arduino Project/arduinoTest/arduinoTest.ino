@@ -12,8 +12,8 @@
 #define ECHO_L     22
 
 
-AF_DCMotor leftWheel(1);
-AF_DCMotor rightWheel(2);
+AF_DCMotor leftWheel(3);
+AF_DCMotor rightWheel(4);
 
 SimplyFuzzy sf;
 

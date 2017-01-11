@@ -15,7 +15,7 @@ public:
 	SimplyFuzzy();
 	~SimplyFuzzy();
 	/**
-	 *  /brief
+	 *  \brief
 	 *  Intializes input and output terms for 3 distance sensors as inputs and 2 wheels as outputs
 	 *  Works as helper method for a constructor
 	 *  In .ino should be called after allocating memory
@@ -62,7 +62,7 @@ private:
 	int minInput;
 
 	/*
-	 *Array of pointers to the last node of ruleLists
+	 * Array of pointers to the last node of ruleLists
 	 * used for easier addition of new values to the list
 	 */
 	Node* rulesTails[6];
